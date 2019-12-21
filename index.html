@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<style>
+.notClicked {
+  flex: 1;
+  height: 140px;
+  background: black;
+  color: white;
+  text-align: center;
+  border: 1px solid white;
+  line-height: 140px;
+}
+.clickedButton {
+  flex: 1;
+  height: 140px;
+  background: white;
+  text-align: center;
+  line-height: 140px;
+  border: 1px solid white;
+}
+#labelsdiv {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+img {
+  width: 100%;
+}
+</style>
+</head>
+<body>
+<script>
+let choices = [];
+function postChoices() {
+  fetch('/', {method: 'POST', body: JSON.stringify(choices)});
+}
+function onChoice(id) {
+  choices.push(id);
+  const button = document.getElementById('' + id);
+  button.classList.remove('notClicked');
+  button.classList.add('clickedButton');
+}
+const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x'];
+document.onkeypress = function(e) {
+  e = e || window.event;
+  const keycode = e.keyCode;
+  if (keycode === 13) {
+    fetch('/', {method: 'POST', body: JSON.stringify(choices)});
+    return;
+  }
+  if (!(keycode in buttonIds)) {
+    return 
+  }
+  const buttonId = buttonIds[keycode];
+  const button = document.getElementById(buttonId);
+  choices.push(buttonId);
+  button.classList.remove('notClicked');
+  button.classList.add('clickedButton');
+}
+const buttonIds = {
+  49: 1,
+  50: 2,
+  51: 3,
+  52: 4,
+  53: 5,
+  54: 6,
+  55: 7,
+  56: 8,
+  57: 9,
+  113: 10,
+  119: 11,
+  101: 12,
+  114: 13,
+  116: 14,
+  121: 15,
+  117: 16,
+  105: 17,
+  111: 18,
+  112: 19,
+  97: 20,
+  115: 21,
+  100: 22,
+  102: 23,
+  103: 24,
+  104: 25,
+  106: 26,
+  107: 27,
+  108: 28,
+  122: 29,
+  120: 30};
+</script>
+<img src='/image'>
+<div id='labelsdiv'></div>
+</body>
+<script>
+const boxDiv = document.getElementById('labelsdiv');
+for (let i=1; i < 31; i++) {
+  const id = '' + i;
+  const box = document.createElement('div');
+  box.innerHTML = keys[i-1];
+  box.className = 'notClicked';
+  // button.onclick = function () {onChoice(i)};
+  box.id = id;
+  boxDiv.appendChild(box);
+}
+</script>
+</html>
