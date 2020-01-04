@@ -7,17 +7,17 @@ import numpy as np
 
 def make_model():
     c2d = keras.layers.convolutional.Conv2D
-    c1 = c2d(4, 5, strides=2, activation='relu')
-    c2 = c2d(7, 3, strides=2, activation='relu')
-    c3 = c2d(10, 3, strides=2, activation='relu')
-    c4 = c2d(13, 3, strides=2, activation='relu')
-    c5 = c2d(16, 3, strides=2, activation='relu')
-    c6 = c2d(19, 3, strides=2, activation='relu')
-    dense1 = keras.layers.Dense(60, activation='relu')
-    dense2 = keras.layers.Dense(30, activation='softmax')
+    c1 = c2d(5, 5, strides=2, activation='relu')
+    c2 = c2d(8, 3, strides=2, activation='relu')
+    c3 = c2d(11, 3, strides=2, activation='relu')
+    c4 = c2d(14, 3, strides=2, activation='relu')
+    c5 = c2d(17, 3, strides=2, activation='relu')
+    c6 = c2d(20, 3, strides=2, activation='relu')
+    dense1 = keras.layers.Dense(15, activation='relu')
+    dense2 = keras.layers.Dense(10, activation='softmax')
     bn = keras.layers.BatchNormalization()
     flat = keras.layers.core.Flatten()
-    input_im = keras.layers.Input(shape=(480, 2000, 1))
+    input_im = keras.layers.Input(shape=(480, 720, 1))
     nn = dense2(dense1(bn(flat(c6(c5(c4(c3(c2(c1(input_im))))))))))
     return keras.models.Model(inputs=input_im, outputs=nn)
 
@@ -31,7 +31,7 @@ model.compile(
 
 
 def format_label(raw):
-    labels = [0 for _ in range(30)]
+    labels = [0 for _ in range(10)]
     for r in raw:
         labels[r] = 1
     arr = np.array(labels)
@@ -58,3 +58,5 @@ class GetSomeData(keras.utils.Sequence):
 
 
 model.fit(x=GetSomeData())
+
+model.save('model.h5')

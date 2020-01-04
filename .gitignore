@@ -2,3 +2,6 @@ venv/
 photos/
 *.sw*
 labels.json
+oldphotos/
+model.h5
+oldlabels.json
