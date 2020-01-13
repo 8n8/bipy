@@ -35,14 +35,20 @@ let choices = [];
 function postChoices() {
   fetch('/', {method: 'POST', body: JSON.stringify(choices)});
 }
-const keys = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'];
+const keys = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'];
+let submittedData = false;
 document.onkeypress = function(e) {
   e = e || window.event;
   const keycode = e.keyCode;
-  console.log(keycode);
-  if (keycode === 13) {
+  if (keycode === 32 && !submittedData) {
     fetch('/', {method: 'POST', body: JSON.stringify(choices)});
+    submittedData = true;
     return;
+  }
+  if (keycode === 32 && submittedData) {
+    submittedData = false;
+    location.reload(true);
+    return
   }
   if (!(keycode in buttonIds)) {
     return 
@@ -54,16 +60,16 @@ document.onkeypress = function(e) {
   button.classList.add('clickedButton');
 }
 const buttonIds = {
-  113: 0,  // q
-  119: 1,  // w
-  101: 2,  // e
-  114: 3,  // r
-  116: 4,  // t
-  121: 5,  // y
-  117: 6,  // u
-  105: 7,  // i
-  111: 8,  // o
-  112: 9}; // p
+  97: 0,  // a
+  115: 1,  // s
+  100: 2,  // d
+  102: 3,  // f
+  103: 4,  // g
+  104: 5,  // h
+  106: 6,  // j
+  107: 7,  // k
+  108: 8,  // l
+  59: 9}; // ;
 </script>
 <img src='/image'>
 <div id='labelsdiv'></div>
