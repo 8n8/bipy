@@ -26,7 +26,7 @@ model = make_model()
 print(model.summary())
 model.compile(
     loss='categorical_crossentropy',
-    optimizer=keras.optimizers.Adam(lr=0.005),
+    optimizer=keras.optimizers.Adam(lr=0.08),
     metrics=['accuracy'])
 
 
@@ -46,7 +46,7 @@ class GetSomeData(keras.utils.Sequence):
             self.labels = json.load(f)
 
     def __len__(self):
-        return len(self.labels)
+        return len(self.filenames)
 
     def __getitem__(self, idx):
         filename = self.filenames[idx]
