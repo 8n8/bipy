@@ -32,23 +32,15 @@ img {
 <body>
 <script>
 let choices = [];
-function postChoices() {
-  fetch('/', {method: 'POST', body: JSON.stringify(choices)});
-}
 const keys = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'];
-let submittedData = false;
 document.onkeypress = function(e) {
   e = e || window.event;
   const keycode = e.keyCode;
-  if (keycode === 32 && !submittedData) {
-    fetch('/', {method: 'POST', body: JSON.stringify(choices)});
-    submittedData = true;
+  if (keycode === 32) {
+    fetch('/', {method: 'POST', body: JSON.stringify(choices)}).then(function() {
+      location.reload(true);
+    })
     return;
-  }
-  if (keycode === 32 && submittedData) {
-    submittedData = false;
-    location.reload(true);
-    return
   }
   if (!(keycode in buttonIds)) {
     return 

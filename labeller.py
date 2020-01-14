@@ -35,12 +35,11 @@ def postmain():
         print("\nALL DONE!\n")
         return
     choices = json.loads(str(bottle.request.body.read().decode()))
-    print(choices)
     labels[imageFileNames[counter]] = choices
     with open('labels.json', 'w') as f:
         json.dump(labels, f)
     counter += 1
-    print(counter)
+    print(f'\n{str(counter)}/{str(len(imageFileNames))}\n')
 
 
 bottle.run(host='localhost', port=3000, debug=True, server='paste')
